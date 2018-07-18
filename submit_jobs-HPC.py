@@ -2,6 +2,7 @@
 
 """
     Sumbit GROMACS 5.0.4 jobs to the new HPC
+        -- Rewritten by Aingty Eung (7/18/2018)
 """
 import os
 import sys
