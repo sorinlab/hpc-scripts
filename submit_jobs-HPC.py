@@ -57,7 +57,7 @@ for i in range(len(options)):
         sys.exit()
 
 # Check for valid input
-if  deffnm == "" or num_cores > 8 or job_name == "" or (gromacs != "314" and gromacs != "33"):
+if  deffnm == "" or num_cores > 8 or job_name == "":
 	print "\n***** ERROR.  INVALID PARAMETERS. *****"
 	print input
 	sys.exit()
