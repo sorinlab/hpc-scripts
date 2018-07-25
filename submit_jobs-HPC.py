@@ -118,8 +118,8 @@ cd "${PBS_O_WORKDIR}";
 ### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
-grompp -np %s -f %s -c %s -p %s -o %s;
-mdrun -np %s -deffnm %s;
+grompp_mpi -np %s -f %s -c %s -p %s -o %s;
+mdrun_mpi -np %s -deffnm %s;
 """ % (job_name, num_cores, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
@@ -129,5 +129,5 @@ for folder in job_folders:
 	file_name.write(script)
 	file_name.close()
 	os.chdir(current_folder + "/" + folder)
-	run("msub -l nodes=1:ppn=%s run_sim.sh >> stderr.log" % (num_cores),True)
+	run("msub -l nodes=1:ppn=%s run_sim.sh" % (num_cores),True)
 	
