@@ -118,9 +118,9 @@ cd "${PBS_O_WORKDIR}";
 ### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
-grompp_mpi -np %s -f %s -c %s -p %s -o %s;
-mpirun -np %s mdrun_mpi -np %s -deffnm %s;
-""" % (job_name, num_cores, deffnm, deffnm, deffnm, deffnm, num_cores, num_cores, deffnm)
+grompp_mpi -f %s -c %s -p %s -o %s;
+mpirun -np %s mdrun_mpi -deffnm %s;
+""" % (job_name, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
 
