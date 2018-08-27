@@ -118,7 +118,7 @@ cd "${PBS_O_WORKDIR}";
 ### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
-grompp_mpi -f pr.mdp -c anneal.gro -p anneal.top -o pr.tpr -n BZCrComplexIndex.ndx  -pp processedComplex.top
+grompp_mpi -f anneal.mdp -c anneal.gro -p anneal.top -o pr.tpr -n BZCrComplexIndex.ndx  -pp processedComplex.top
 mpirun -np 1 mdrun_mpi -deffnm pr
 #grompp_mpi -n %s -f %s -c %s -p %s -o %s;
 #mpirun -np %s mdrun_mpi -deffnm %s;
