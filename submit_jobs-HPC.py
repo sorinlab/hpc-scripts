@@ -99,9 +99,10 @@ while num_folder <= num_sims:
 	while len(folder) < 3:
 		folder = "0" + folder
 	run("mkdir %s" % (folder))
-	run("cp %s.top %s" % (deffnm, folder))
-	run("cp %s.gro %s" % (deffnm, folder))
-	run("cp %s.mdp %s" % (deffnm, folder))	
+	run("cp * %s" %(folder))
+	#run("cp %s.top %s" % (deffnm, folder))
+	#run("cp %s.gro %s" % (deffnm, folder))
+	#run("cp %s.mdp %s" % (deffnm, folder))	
 	job_folders.append(folder)
 	num_folder += 1
 
