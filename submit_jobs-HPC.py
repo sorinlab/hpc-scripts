@@ -99,10 +99,10 @@ while num_folder <= num_sims:
 	while len(folder) < 3:
 		folder = "0" + folder
 	run("mkdir %s" % (folder))
-	run("cp * %s" %(folder))
-	#run("cp %s.top %s" % (deffnm, folder))
-	#run("cp %s.gro %s" % (deffnm, folder))
-	#run("cp %s.mdp %s" % (deffnm, folder))	
+	#run("cp * %s" %(folder))
+	run("cp %s.top %s" % (deffnm, folder))
+	run("cp %s.gro %s" % (deffnm, folder))
+	run("cp %s.mdp %s" % (deffnm, folder))	
 	job_folders.append(folder)
 	num_folder += 1
 
@@ -110,7 +110,7 @@ while num_folder <= num_sims:
 script = """#!/bin/bash
 
 ### Specify the name of the job to run (the line below is not a comment even though it looks like one)
-#MSUB -N %s
+#MSUB -N %s -l walltime=99:00:00:00
 
 ### Use the current folder as the working directory
 PBS_PWD="`pwd`";
@@ -119,10 +119,8 @@ cd "${PBS_O_WORKDIR}";
 ### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
-grompp_mpi -f anneal.mdp -c anneal.gro -p anneal.top -o pr.tpr -n BZCrComplexIndex.ndx  -pp processedComplex.top
-mpirun -np 1 mdrun_mpi -deffnm pr
-#grompp_mpi -n %s -f %s -c %s -p %s -o %s;
-#mpirun -np %s mdrun_mpi -deffnm %s;
+grompp_mpi -n %s -f %s -c %s -p %s -o %s;
+mpirun -np %s mdrun_mpi -deffnm %s;
 """ % (job_name, job_name, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
@@ -132,5 +130,5 @@ for folder in job_folders:
 	file_name.write(script)
 	file_name.close()
 	os.chdir(current_folder + "/" + folder)
-	run("msub -l nodes=1:ppn=%s run_sim.sh" % (num_cores),True)
+	run("msub -l nodes=1:ppn=%s run_sim.sh >> stderr.log" % (num_cores),True)
 	
