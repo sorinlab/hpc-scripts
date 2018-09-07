@@ -73,6 +73,8 @@ if not os.path.exists('%s.top'% (deffnm)):
 if not os.path.exists('%s.mdp'% (deffnm)):
 	print "\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm)
 	missing_file_error = True	
+if not os.path.exists('%s.ndx'% (deffnm)):
+    print "\n***** ERROR: '%s.ndx' file not found. *****" % ()
 if missing_file_error:
 	sys.exit()
 
@@ -119,9 +121,9 @@ cd "${PBS_O_WORKDIR}";
 ### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
-grompp_mpi -n %s -f %s -c %s -p %s -o %s;
+grompp_mpi -f %s -c %s -p %s -o %s;
 mpirun -np %s mdrun_mpi -deffnm %s;
-""" % (job_name, job_name, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
+""" % (job_name, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
 
