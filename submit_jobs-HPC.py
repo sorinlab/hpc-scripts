@@ -70,7 +70,7 @@ if not os.path.exists('%s.gro' % (deffnm)):
 if not os.path.exists('%s.top'% (deffnm)):
 	print "\n***** ERROR: '%s.top' file not found. *****" % (deffnm)
 	missing_file_error = True
-if not os.path.exists('pr.mdp'% (deffnm)):
+if not os.path.exists('pr.mdp'):
 	print "\n***** ERROR: 'pr.mdp' file not found. *****" % (deffnm)
 	missing_file_error = True	
 if missing_file_error:
