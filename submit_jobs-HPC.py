@@ -70,11 +70,9 @@ if not os.path.exists('%s.gro' % (deffnm)):
 if not os.path.exists('%s.top'% (deffnm)):
 	print "\n***** ERROR: '%s.top' file not found. *****" % (deffnm)
 	missing_file_error = True
-if not os.path.exists('%s.mdp'% (deffnm)):
-	print "\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm)
+if not os.path.exists('pr.mdp'% (deffnm)):
+	print "\n***** ERROR: 'pr.mdp' file not found. *****" % (deffnm)
 	missing_file_error = True	
-if not os.path.exists('%s.ndx'% (deffnm)):
-    print "\n***** ERROR: '%s.ndx' file not found. *****" % ()
 if missing_file_error:
 	sys.exit()
 
@@ -104,7 +102,7 @@ while num_folder <= num_sims:
 	#run("cp * %s" %(folder))
 	run("cp %s.top %s" % (deffnm, folder))
 	run("cp %s.gro %s" % (deffnm, folder))
-	run("cp %s.mdp %s" % (deffnm, folder))	
+	run("cp pr.mdp %s" % (deffnm, folder))	
 	job_folders.append(folder)
 	num_folder += 1
 
