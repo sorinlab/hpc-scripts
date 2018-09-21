@@ -102,7 +102,7 @@ while num_folder <= num_sims:
 	#run("cp * %s" %(folder))
 	run("cp %s.top %s" % (deffnm, folder))
 	run("cp %s.gro %s" % (deffnm, folder))
-	run("cp pr.mdp %s" % (deffnm, folder))	
+	run("cp pr.mdp %s" % (folder))	
 	job_folders.append(folder)
 	num_folder += 1
 
