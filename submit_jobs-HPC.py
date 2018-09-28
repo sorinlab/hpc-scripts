@@ -20,7 +20,7 @@ def run(command, display_output=False):
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
 
-    -deffnm     or -d  name used for gro, top, mdp, and output files (required)
+    -deffnm     or -d  name used for gro, top, and output files (required)
     -name       or -n  name of the job used by the PBS queue system (required)
     -sims       or -s  number of simulations to perform (default: 1)
     -cores      or -c  number of cores used for each simulation (default: 1, maximum: ??)
@@ -120,7 +120,7 @@ cd "${PBS_O_WORKDIR}";
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
 grompp_mpi -f pr.mdp -c %s -p %s -o %s-run;
-mpirun -np %s mdrun_mpi -deffnm %s-run;
+mpirun -np %s mdrun_mpi -deffnm %s-run >& stderr.log &;
 """ % (job_name, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
