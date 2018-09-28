@@ -99,7 +99,6 @@ while num_folder <= num_sims:
 	while len(folder) < 3:
 		folder = "0" + folder
 	run("mkdir %s" % (folder))
-	#run("cp * %s" %(folder))
 	run("cp %s.top %s" % (deffnm, folder))
 	run("cp %s.gro %s" % (deffnm, folder))
 	run("cp pr.mdp %s" % (folder))	
@@ -120,7 +119,7 @@ cd "${PBS_O_WORKDIR}";
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
 grompp_mpi -f pr.mdp -c %s -p %s -o %s-run;
-mpirun -np %s mdrun_mpi -deffnm %s-run;
+mdrun_mpi -deffnm %s-run;
 """ % (job_name, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
