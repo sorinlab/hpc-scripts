@@ -23,7 +23,7 @@ Usage:  submit_jobs-HPC.py  [options]
     -deffnm     or -d  name used for gro and top (required)
     -name       or -n  name of the job used by the PBS queue system (required)
     -sims       or -s  number of simulations to perform (default: 1)
-    -cores      or -c  number of cores used for each simulation (default: 1, maximum: ??)
+    -cores      or -c  number of cores used for each simulation (default: 1, maximum: 48)
     -help       or -h  show this help message and exit
 """
 
@@ -57,7 +57,7 @@ for i in range(len(options)):
         sys.exit()
 
 # Check for valid input
-if  deffnm == "" or num_cores > 8 or job_name == "":
+if  deffnm == "" or num_cores > 48 or job_name == "":
 	print "\n***** ERROR.  INVALID PARAMETERS. *****"
 	print input
 	sys.exit()
