@@ -130,5 +130,5 @@ for folder in job_folders:
 	file_name.write(script)
 	file_name.close()
 	os.chdir(current_folder + "/" + folder)
-	run("msub -j %s -l procs=%s run_sim.sh" % (job_name, num_cores),True)
+	run("msub -j oe -l procs=%s run_sim.sh" % (job_name, num_cores),True)
 	
