@@ -120,7 +120,7 @@ cd "${PBS_O_WORKDIR}";
 source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
 grompp_mpi -f pr.mdp -c %s -p %s -o %s-run;
-mpirun -np %s mdrun_mpi -deffnm %s-run >& stderr.log &
+mpirun -np %s mdrun_mpi -deffnm %s-run;
 """ % (job_name, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
@@ -130,5 +130,5 @@ for folder in job_folders:
 	file_name.write(script)
 	file_name.close()
 	os.chdir(current_folder + "/" + folder)
-	run("msub -l nodes=1:ppn=%s run_sim.sh" % (num_cores),True)
+	run("msub -l procs=%s run_sim.sh" % (num_cores),True)
 	
