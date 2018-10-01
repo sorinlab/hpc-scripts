@@ -88,8 +88,8 @@ while num_folder <= num_sims:
 		if(answer == "y" or answer == "Y"):
     			run("rm -rf 0*")
 		else:
-    			print "Please deal with the existing folders before running this script again."
-				sys.exit()
+			print "Please deal with the existing folders before running this script again."
+			sys.exit()
 	num_folder += 1
 
 # make a folder for each simulation
