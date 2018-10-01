@@ -84,7 +84,7 @@ while num_folder <= num_sims:
 		folder = "0" + folder
 	if os.path.exists(folder):
 		print "\n***** ERROR: simulation directory already exists. *****"
-		answer = raw_input("***** Would you like me to delete all existing folders for you? (Y/y for yes) *****")
+		answer = raw_input("Would you like me to delete all existing folders for you? (Y/y for yes)\n\tAnswer: ")
 		if(answer == "y" or answer == "Y"):
     			run("rm -rf 0*")
 		else:
