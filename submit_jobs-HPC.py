@@ -22,7 +22,7 @@ Usage:  submit_jobs-HPC.py  [options]
 
     -deffnm     or -d  name used for gro and top (required)
     -name       or -n  name of the job used by the PBS queue system (required)
-    -sims       or -s  number of simulations to perform (default: 1)
+    -sims       or -s  number of simulations to perform (default: 1, maximum: 99)
     -cores      or -c  number of cores used for each simulation (default: 1, maximum: 48)
     -help       or -h  show this help message and exit
 """
@@ -57,7 +57,7 @@ for i in range(len(options)):
         sys.exit()
 
 # Check for valid input
-if  deffnm == "" or num_cores > 48 or job_name == "":
+if  deffnm == "" or num_cores > 48 or job_name == "" or num_sims > 99:
 	print "\n***** ERROR.  INVALID PARAMETERS. *****"
 	print input
 	sys.exit()
@@ -78,18 +78,19 @@ if missing_file_error:
 
 # Crash if a working directory already exist
 num_folder = 1
-folder_exists_error = False
 while num_folder <= num_sims:
 	folder = str(num_folder)
 	while len(folder) < 3:
 		folder = "0" + folder
 	if os.path.exists(folder):
 		print "\n***** ERROR: working directory '%s' already exists. *****" % (folder)
-		print "***** Please move or delete it (if not needed).      *****"
-		folder_exists_error = True
+		answer = input("***** Would you like me to delete it for you? (Y/y for yes) *****")
+		if(answer == "y" or answer == "Y"):
+			run("rm -rf 0*")
+		else:
+    		print "Please deal with the existing folders before running this script again."
+			sys.exit()
 	num_folder += 1
-if folder_exists_error:
-	sys.exit()
 
 # make a folder for each simulation
 num_folder = 1
