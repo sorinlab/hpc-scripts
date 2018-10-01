@@ -59,6 +59,14 @@ for i in range(len(options)):
 # Check for valid input
 if  deffnm == "" or num_cores > 48 or job_name == "" or num_sims > 99:
 	print "\n***** ERROR.  INVALID PARAMETERS. *****"
+	if deffnm == "":
+		print "\nName of .gro and .top is missing!!"
+	if num_cores > 48:
+    	print "\nNumber of cores exceed 48!!"
+	if job_name == "":
+    	print "\nPBS queue name is missing!!"
+	if num_sims > 99:
+    	print "\nNumber of simulations exceed 99!!"
 	print input
 	sys.exit()
 
@@ -86,7 +94,7 @@ while num_folder <= num_sims:
 		print "\n***** ERROR: simulation directory already exists. *****"
 		answer = raw_input("Would you like me to delete all existing folders for you? (Y/y for yes)\n\tAnswer: ")
 		if(answer == "y" or answer == "Y"):
-    			run("rm -rf 0*")
+			run("rm -rf 0*")
 		else:
 			print "Please deal with the existing folders before running this script again."
 			sys.exit()
