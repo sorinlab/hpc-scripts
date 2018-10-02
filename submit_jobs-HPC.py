@@ -62,7 +62,7 @@ if  deffnm == "" or num_cores > 48 or job_name == "" or num_sims > 99:
 	if deffnm == "":
 		print "\nName of .gro and .top is missing!!"
 	if num_cores > 48:
-    	print "\nNumber of cores exceed 48!!"
+		print "\nNumber of cores exceed 48!!"
 	if job_name == "":
     	print "\nPBS queue name is missing!!"
 	if num_sims > 99:
