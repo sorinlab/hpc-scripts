@@ -64,9 +64,9 @@ if  deffnm == "" or num_cores > 48 or job_name == "" or num_sims > 99:
 	if num_cores > 48:
 		print "\nNumber of cores exceed 48!!"
 	if job_name == "":
-    	print "\nPBS queue name is missing!!"
+		print "\nPBS queue name is missing!!"
 	if num_sims > 99:
-    	print "\nNumber of simulations exceed 99!!"
+		print "\nNumber of simulations exceed 99!!"
 	print input
 	sys.exit()
 
