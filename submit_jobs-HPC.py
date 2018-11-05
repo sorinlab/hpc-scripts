@@ -20,7 +20,7 @@ def run(command, display_output=False):
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
 
-    -deffnm     or -d  name used for gro and top (required)
+    -deffnm     or -d  name used for mdp, gro, top, and ndx (required)
     -name       or -n  name of the job used by the PBS queue system (required)
     -sims       or -s  number of simulations to perform (default: 1, maximum: 99)
     -cores      or -c  number of cores used for each simulation (default: 1, maximum: 48)
@@ -60,7 +60,7 @@ for i in range(len(options)):
 if  deffnm == "" or num_cores > 48 or job_name == "" or num_sims > 99:
 	print "\n***** ERROR.  INVALID PARAMETERS. *****"
 	if deffnm == "":
-		print "\nName of .gro and .top is missing!!"
+		print "\nName of mdp, gro, top, and ndx is missing!!"
 	if num_cores > 48:
 		print "\nNumber of cores exceed 48!!"
 	if job_name == "":
@@ -79,7 +79,7 @@ if not os.path.exists('%s.top'% (deffnm)):
 	print "\n***** ERROR: '%s.top' file not found. *****" % (deffnm)
 	missing_file_error = True
 if not os.path.exists('pr.mdp'):
-	print "\n***** ERROR: 'pr.mdp' file not found. *****" % (deffnm)
+	print "\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm)
 	missing_file_error = True	
 if missing_file_error:
 	sys.exit()
