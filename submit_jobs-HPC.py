@@ -8,14 +8,19 @@ import os
 import sys
 import commands
 
-# Fucntion to run a linux command
+# Function to run a linux command
 def run(command, display_output=False):
     status, output = commands.getstatusoutput(command)
     if display_output:
-        print "----------------------------------------------------------------------"
-        print "$" + command
-        print output
-        print "----------------------------------------------------------------------"
+        print("----------------------------------------------------------------------")
+        print("$" + command)
+        print(output)
+        print("----------------------------------------------------------------------")
+
+# Function used to get qstat status of HPC
+def getProcessor():
+    status, output = commands.getstatusoutput("qstat -f |grep exec_host")
+    return output
 
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
@@ -44,42 +49,42 @@ for i in range(len(options)):
         job_name = options[i+1]
     if flag == "-sims" or flag == "-s":
         if options[i+1].isdigit() == False:
-            print "Invalid simulations number!!! ", options[i+1] ," is not a NUMBER!!"
+            print("Invalid simulations number!!! ", options[i+1] ," is not a NUMBER!!")
             sys.exit()
         num_sims = int(options[i+1])
     if flag == "-cores" or flag == "-c":
         if options[i+1].isdigit() == False:
-            print "Invalid cores number!!! ", options[i+1] ," is not a NUMBER!!!"
+            print("Invalid cores number!!! ", options[i+1] ," is not a NUMBER!!!")
             sys.exit()
         num_cores = int(options[i+1])
     if flag == "-help" or flag == "-h":
-        print input
+        print(input)
         sys.exit()
 
 # Check for valid input
 if  deffnm == "" or num_cores > 48 or job_name == "" or num_sims > 99:
-	print "\n***** ERROR.  INVALID PARAMETERS. *****"
+	print("\n***** ERROR.  INVALID PARAMETERS. *****")
 	if deffnm == "":
-		print "\nName of mdp, gro, top, and ndx is missing!!"
+		print("\nName of mdp, gro, top, and ndx is missing!!")
 	if num_cores > 48:
-		print "\nNumber of cores exceed 48!!"
+		print("\nNumber of cores exceed 48!!")
 	if job_name == "":
-		print "\nPBS queue name is missing!!"
+		print("\nPBS queue name is missing!!")
 	if num_sims > 99:
-		print "\nNumber of simulations exceed 99!!"
-	print input
+		print("\nNumber of simulations exceed 99!!")
+	print(input)
 	sys.exit()
 
 # Check that .top, .gro, and .mdp files exist
 missing_file_error = False
 if not os.path.exists('%s.gro' % (deffnm)):
-	print "\n***** ERROR: '%s.gro' file not found. *****" % (deffnm)
+	print("\n***** ERROR: '%s.gro' file not found. *****" % (deffnm))
 	missing_file_error = True
 if not os.path.exists('%s.top'% (deffnm)):
-	print "\n***** ERROR: '%s.top' file not found. *****" % (deffnm)
+	print("\n***** ERROR: '%s.top' file not found. *****" % (deffnm))
 	missing_file_error = True
 if not os.path.exists('%s.mdp' % (deffnm)):
-	print "\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm)
+	print("\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm))
 	missing_file_error = True	
 if missing_file_error:
 	sys.exit()
@@ -91,13 +96,13 @@ while num_folder <= num_sims:
 	while len(folder) < 3:
 		folder = "0" + folder
 	if os.path.exists(folder):
-		print "\n***** ERROR: simulation directory already exists. *****"
+		print("\n***** ERROR: simulation directory already exists. *****")
 		answer = raw_input("Would you like me to delete all existing folders for you? (Y/y for yes)\n\tAnswer: ")
 		if(answer == "y" or answer == "Y"):
-			print "\nOkay removing all existing folders (Running: rm -rf 0*)"
+			print("\nOkay removing all existing folders (Running: rm -rf 0*)")
 			run("rm -rf 0*")
 		else:
-			print "\nPlease deal with the existing folders before running this script again."
+			print("\nPlease deal with the existing folders before running this script again.")
 			sys.exit()
 	num_folder += 1
 
