@@ -23,7 +23,7 @@ def getProcessor():
 
 # Grabbing Available Cores Information and Setting Constraint on Cores Usage Section
 listArray = getProcessor()
-
+listArray = listArray.split("\n")
 # Declare to cores available for all Sorinlab Nodes
 coresAvailable = {
 	"node17":48,
