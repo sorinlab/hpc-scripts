@@ -22,8 +22,9 @@ def getProcessor():
     status, output = commands.getstatusoutput("qstat -f |grep exec_host")
     return output
 
-# listArray = getProcessor()
-# print(listArray)
+# Grabbing Available Cores Information and Setting Constraint on Cores Usage
+listArray = getProcessor()
+
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
 
