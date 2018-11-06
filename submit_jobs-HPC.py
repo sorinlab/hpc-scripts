@@ -21,15 +21,32 @@ def getProcessor():
     status, output = commands.getstatusoutput("qstat -f |grep exec_host")
     return output
 
-# Grabbing Available Cores Information and Setting Constraint on Cores Usage
+# Grabbing Available Cores Information and Setting Constraint on Cores Usage Section
 listArray = getProcessor()
-availableCores = [0] * 20
+
+ # Declare to cores available for all Sorinlab Nodes
+coresAvailable = 
+{
+	"node17":48,
+	"node18":48
+}
+
 for i in listArray:
-	coreIndex = 0
-    # Append to this "if" statement if we get a new node or make into list if we get more nodes
+    # Add more "if" statements if we get a new node 
 	if i.contains("node17"):
 		tempSplit = i.split("/")
-    
+		if tempSplit[1].contains("-"):
+    		tempSplit = tempSplit[1].split("-")
+			coresAvailable["node17"] = coresAvailable["node17"] - (tempSplit[1] - tempSplit[0] + 1)
+		else:
+    		coresAvailable["node17"] = coresAvailable["node17"] - 1
+	if i.contains("node18"):
+    	tempSplit = i.split("/")
+		if tempSplit[1].contains("-"):
+    		tempSplit = tempSplit[1].split("-")
+			coresAvailable["node18"] = coresAvailable["node18"] - (tempSplit[1] - tempSplit[0] + 1)
+		else:
+    		coresAvailable["node18"] = coresAvailable["node18"] - 1
 
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
@@ -39,7 +56,11 @@ Usage:  submit_jobs-HPC.py  [options]
     -sims       or -s  number of simulations to perform (default: 1, maximum: 99)
     -cores      or -c  number of cores used for each simulation (default: 1, maximum: 48)
     -help       or -h  show this help message and exit
-"""
+
+	Current Cores Usage:
+		Node 17: %s cores available(s)
+		Node 18: %s cores available(s)
+""" % (coresAvailable["node17"],coresAvailable["node18"])
 
 # default parameters
 deffnm = ""
