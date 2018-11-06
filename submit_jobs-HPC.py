@@ -24,29 +24,28 @@ def getProcessor():
 # Grabbing Available Cores Information and Setting Constraint on Cores Usage Section
 listArray = getProcessor()
 
- # Declare to cores available for all Sorinlab Nodes
-coresAvailable = 
-{
+# Declare to cores available for all Sorinlab Nodes
+coresAvailable = {
 	"node17":48,
 	"node18":48
 }
 
 for i in listArray:
-    # Add more "if" statements if we get a new node 
-	if i.contains("node17"):
+	# Add more "if" statements if we get a new node 
+	if "node17" in i:
 		tempSplit = i.split("/")
-		if tempSplit[1].contains("-"):
-    		tempSplit = tempSplit[1].split("-")
+		if "-" in tempSplit[1]:
+			tempSplit = tempSplit[1].split("-")
 			coresAvailable["node17"] = coresAvailable["node17"] - (tempSplit[1] - tempSplit[0] + 1)
 		else:
-    		coresAvailable["node17"] = coresAvailable["node17"] - 1
-	if i.contains("node18"):
-    	tempSplit = i.split("/")
-		if tempSplit[1].contains("-"):
-    		tempSplit = tempSplit[1].split("-")
+			coresAvailable["node17"] = coresAvailable["node17"] - 1
+	if "node18" in i:
+		tempSplit = i.split("/")
+		if "-" in tempSplit[1]:
+			tempSplit = tempSplit[1].split("-")
 			coresAvailable["node18"] = coresAvailable["node18"] - (tempSplit[1] - tempSplit[0] + 1)
 		else:
-    		coresAvailable["node18"] = coresAvailable["node18"] - 1
+			coresAvailable["node18"] = coresAvailable["node18"] - 1
 
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
