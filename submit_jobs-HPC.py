@@ -32,6 +32,7 @@ coresAvailable = {
 
 for i in listArray:
 	# Add more "if" statements if we get a new node 
+	print (i)
 	if "node17" in i:
 		tempSplit = i.split("/")
 		print(tempSplit,"\n")
