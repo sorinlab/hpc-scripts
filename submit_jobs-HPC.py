@@ -1,9 +1,8 @@
 #! /usr/bin/python
 
-"""
-    Sumbit GROMACS 5.0.4 jobs to the new HPC
-        -- Rewritten by Aingty Eung (7/18/2018)
-"""
+# Sumbit GROMACS 5.0.4 jobs to the new HPC
+# 	-- Rewritten by Aingty Eung (7/18/2018)
+    
 import os
 import sys
 import commands
@@ -24,6 +23,13 @@ def getProcessor():
 
 # Grabbing Available Cores Information and Setting Constraint on Cores Usage
 listArray = getProcessor()
+availableCores = [0] * 20
+for i in listArray:
+	coreIndex = 0
+    # Append to this "if" statement if we get a new node or make into list if we get more nodes
+	if i.contains("node17"):
+		tempSplit = i.split("/")
+    
 
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
