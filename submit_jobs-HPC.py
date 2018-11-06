@@ -55,10 +55,10 @@ Usage:  submit_jobs-HPC.py  [options]
     -sims       or -s  number of simulations to perform (default: 1, maximum: 99)
     -cores      or -c  number of cores used for each simulation (default: 1, maximum: 48)
     -help       or -h  show this help message and exit
-
-	Current Cores Usage:
-		Node 17: %s cores available(s)
-		Node 18: %s cores available(s)
+	
+Current Cores Usage:
+	Node 17: %s cores available(s)
+	Node 18: %s cores available(s)
 """ % (coresAvailable["node17"],coresAvailable["node18"])
 
 # default parameters
