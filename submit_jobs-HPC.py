@@ -134,8 +134,9 @@ if not os.path.exists('%s.top' % (deffnm)):
 if not os.path.exists('%s.mdp' % (deffnm)):
 	print("\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm))
 	missing_file_error = True
-if not os.path.exists('%s.ndx' % (deffnm)) and take_ndx == True:
+if take_ndx == True and not os.path.exists('%s.ndx' % (deffnm)):
 	print("\n***** ERROR: '%s.ndx' file not found. *****" % (deffnm))
+	missing_file_error = True
 if missing_file_error:
 	sys.exit()
 
