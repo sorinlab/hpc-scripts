@@ -82,6 +82,7 @@ take_ndx = True
 options = sys.argv
 for i in range(len(options)):
     flag = options[i].lower()
+	print(flag)
     if flag == "-deffnm" or flag == "-d":
         deffnm = options[i+1]
     if flag == "-name" or flag == "-n":
@@ -97,7 +98,6 @@ for i in range(len(options)):
             sys.exit()
         num_cores = int(options[i+1])
 	if flag == "-nondx" or flag == "-x":
-		print("TESTING!!!!!")
 		take_ndx = False
     if flag == "-help" or flag == "-h":
         print(input)
