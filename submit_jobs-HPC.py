@@ -81,27 +81,27 @@ take_ndx = True
 # get flags 
 options = sys.argv
 for i in range(len(options)):
-    flag = options[i].lower()
+	flag = options[i].lower()
 	print(flag)
-    if flag == "-deffnm" or flag == "-d":
-        deffnm = options[i+1]
-    if flag == "-name" or flag == "-n":
-        job_name = options[i+1]
-    if flag == "-sim" or flag == "-s":
-        if options[i+1].isdigit() == False:
-            print("Invalid simulations number!!! ", options[i+1] ," is not a NUMBER!!")
-            sys.exit()
-        num_sims = int(options[i+1])
-    if flag == "-core" or flag == "-c":
-        if options[i+1].isdigit() == False:
-            print("Invalid cores number!!! ", options[i+1] ," is not a NUMBER!!!")
-            sys.exit()
-        num_cores = int(options[i+1])
+	if flag == "-deffnm" or flag == "-d":
+		deffnm = options[i+1]
+	if flag == "-name" or flag == "-n":
+		job_name = options[i+1]
+	if flag == "-sim" or flag == "-s":
+		if options[i+1].isdigit() == False:
+			print("Invalid simulations number!!! ", options[i+1] ," is not a NUMBER!!")
+			sys.exit()
+		num_sims = int(options[i+1])
+	if flag == "-core" or flag == "-c":
+		if options[i+1].isdigit() == False:
+			print("Invalid cores number!!! ", options[i+1] ," is not a NUMBER!!!")
+			sys.exit()
+		num_cores = int(options[i+1])
 	if flag == "-nondx" or flag == "-x":
 		take_ndx = False
-    if flag == "-help" or flag == "-h":
-        print(input)
-        sys.exit()
+	if flag == "-help" or flag == "-h":
+		print(input)
+		sys.exit()
 
 # Check for valid input
 if  deffnm == "" or num_cores > maximumCore or job_name == "" or num_sims * num_cores > maximumCore or num_cores <= 0 or num_sims <= 0:
