@@ -99,10 +99,12 @@ for i in range(len(options)):
         sys.exit()
 
 # Check for valid input
-if  deffnm == "" or num_cores > maximumCore or job_name == "" or num_sims > 99:
+if  deffnm == "" or num_cores > maximumCore or job_name == "" or num_sims * num_cores > maximumCore or num_cores <= 0 or num_sims <= 0:
 	print("\n***** ERROR.  INVALID PARAMETERS. *****")
 	if deffnm == "":
 		print("\nName of mdp, gro, top, and ndx is missing!!")
+	if num_cores <= 0:
+		print("\nYou've have selected an invalid number of core(s)")
 	if num_cores > maximumCore:
 		if maximumCore == 0:
 			print("\nNo more cores available!!!")
@@ -110,8 +112,10 @@ if  deffnm == "" or num_cores > maximumCore or job_name == "" or num_sims > 99:
 			print("\nNumber of cores exceed maximum cores!!")
 	if job_name == "":
 		print("\nPBS queue name is missing!!")
-	if num_sims > 99:
-		print("\nNumber of simulations exceed 99!!")
+	if num_sims <= 0:
+		print("\nYou've have selected an invalid number of simulation(s)")
+	if num_sims * num_cores > maximumCore:
+		print("\nNumber of simulations times number of cores exceed maximum cores!!")
 	print(input)
 	sys.exit()
 
@@ -120,16 +124,18 @@ missing_file_error = False
 if not os.path.exists('%s.gro' % (deffnm)):
 	print("\n***** ERROR: '%s.gro' file not found. *****" % (deffnm))
 	missing_file_error = True
-if not os.path.exists('%s.top'% (deffnm)):
+if not os.path.exists('%s.top' % (deffnm)):
 	print("\n***** ERROR: '%s.top' file not found. *****" % (deffnm))
 	missing_file_error = True
 if not os.path.exists('%s.mdp' % (deffnm)):
 	print("\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm))
-	missing_file_error = True	
+	missing_file_error = True
+if not os.path.exists('%s.ndx' % (deffnm)):
+	print("\n***** ERROR: '%s.ndx' file not found. *****" % (deffnm))
 if missing_file_error:
 	sys.exit()
 
-# Crash if a working directory already exist
+# Check if a working directory already exist then prompt user for deletion
 num_folder = 1
 while num_folder <= num_sims:
 	folder = str(num_folder)
@@ -156,7 +162,8 @@ while num_folder <= num_sims:
 	run("mkdir %s" % (folder))
 	run("cp %s.top %s" % (deffnm, folder))
 	run("cp %s.gro %s" % (deffnm, folder))
-	run("cp %s.mdp %s" % (deffnm, folder))	
+	run("cp %s.mdp %s" % (deffnm, folder))
+	run("cp %s.ndx %s" % (deffnm, folder))	
 	job_folders.append(folder)
 	num_folder += 1
 
