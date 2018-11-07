@@ -61,7 +61,7 @@ Usage:  submit_jobs-HPC.py  [options]
 			* IE: 2 simulations with 5 cores means 2 simulations with 5 cores each, totaling 10 cores
     -core       or -c  number of cores used for each simulation (default: 1, maximum: %s)
 			* Maximum core(s) calculated to 1 simulation
-    -nondx		or -x  exclude ndx file
+    -nondx      or -x  exclude ndx file
     -help       or -h  show this help message and exit
 	
 Current Cores Usage:
