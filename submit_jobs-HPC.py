@@ -97,6 +97,7 @@ for i in range(len(options)):
             sys.exit()
         num_cores = int(options[i+1])
 	if flag == "-nondx" or flag == "-x":
+		print("TESTING!!!!!")
 		take_ndx = False
     if flag == "-help" or flag == "-h":
         print(input)
