@@ -26,7 +26,6 @@ def getProcessor():
 listArray = getProcessor()
 listArray = listArray.replace("+","\n")
 listArray = listArray.split("\n")
-print(listArray)
 # Declare to cores available for all Sorinlab Nodes
 coresAvailable = {
 	"n017":48,
