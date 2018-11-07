@@ -48,20 +48,24 @@ for i in listArray:
 			coresAvailable["node18"] = coresAvailable["node18"] - (tempSplit[1] - tempSplit[0] + 1)
 		else:
 			coresAvailable["node18"] = coresAvailable["node18"] - 1
-
+maximumCore = 0
+for key in coresAvailable:
+	maximumCore = maximumCore + coresAvailable[key] 
 input = """ 
 Usage:  submit_jobs-HPC.py  [options]
 
     -deffnm     or -d  name used for mdp, gro, top, and ndx (required)
     -name       or -n  name of the job used by the PBS queue system (required)
-    -sims       or -s  number of simulations to perform (default: 1, maximum: 99)
-    -cores      or -c  number of cores used for each simulation (default: 1, maximum: 48)
+    -sims       or -s  number of simulations to perform (default: 1, maximum: *must not exceed cores)
+			* IE: 2 simulations with 5 cores means 2 simulations with 5 cores each, totaling 10 cores
+    -cores      or -c  number of cores used for each simulation (default: 1, maximum: %s)
+			* Maximum core(s) to 1 simulation
     -help       or -h  show this help message and exit
 	
 Current Cores Usage:
-	Node 17: %s cores available(s)
-	Node 18: %s cores available(s)
-""" % (coresAvailable["node17"],coresAvailable["node18"])
+	Node 17: %s core(s) available
+	Node 18: %s core(s) available
+""" % (maximumCore,coresAvailable["node17"],coresAvailable["node18"])
 
 # default parameters
 deffnm = ""
