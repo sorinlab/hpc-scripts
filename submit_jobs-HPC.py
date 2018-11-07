@@ -32,10 +32,8 @@ coresAvailable = {
 
 for i in listArray:
 	# Add more "if" statements if we get a new node 
-	print (i)
 	if "node17" in i:
 		tempSplit = i.split("/")
-		print(tempSplit,"\n")
 		if "-" in tempSplit[1]:
 			tempSplit = tempSplit[1].split("-")
 			coresAvailable["node17"] = coresAvailable["node17"] - (tempSplit[1] - tempSplit[0] + 1)
@@ -43,7 +41,6 @@ for i in listArray:
 			coresAvailable["node17"] = coresAvailable["node17"] - 1
 	if "node18" in i:
 		tempSplit = i.split("/")
-		print(tempSplit,"\n")
 		if "-" in tempSplit[1]:
 			tempSplit = tempSplit[1].split("-")
 			coresAvailable["node18"] = coresAvailable["node18"] - (tempSplit[1] - tempSplit[0] + 1)
