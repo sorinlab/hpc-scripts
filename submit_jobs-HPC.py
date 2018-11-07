@@ -23,8 +23,7 @@ def getProcessor():
     return output
 
 # Grabbing Available Cores Information and Setting Constraint on Cores Usage Section
-#listArray = getProcessor()
-listArray = "exec_host = n001.cluster.com/0\nexec_host = n015.cluster.com/9\nexec_host = n015.cluster.com/7\nexec_host = n018.cluster.com/0-47+n017.cluster.com/0-47"
+listArray = getProcessor()
 listArray = listArray.replace("+","\n")
 listArray = listArray.split("\n")
 print(listArray)
