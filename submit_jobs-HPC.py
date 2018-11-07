@@ -60,7 +60,8 @@ Usage:  submit_jobs-HPC.py  [options]
     -sim        or -s  number of simulations to perform (default: 1, maximum: *must not exceed cores)
 			* IE: 2 simulations with 5 cores means 2 simulations with 5 cores each, totaling 10 cores
     -core       or -c  number of cores used for each simulation (default: 1, maximum: %s)
-			* Maximum core(s) to 1 simulation
+			* Maximum core(s) calculated to 1 simulation
+	-nondx		or -x  exclude ndx file
     -help       or -h  show this help message and exit
 	
 Current Cores Usage:
@@ -75,6 +76,7 @@ job_name = ""
 gromacs = ""
 num_sims = 1
 num_cores = 1
+take_ndx = True
 
 # get flags 
 options = sys.argv
@@ -94,6 +96,8 @@ for i in range(len(options)):
             print("Invalid cores number!!! ", options[i+1] ," is not a NUMBER!!!")
             sys.exit()
         num_cores = int(options[i+1])
+	if flag == "-nondx" or flag == "-x":
+		take_ndx = False
     if flag == "-help" or flag == "-h":
         print(input)
         sys.exit()
@@ -130,7 +134,7 @@ if not os.path.exists('%s.top' % (deffnm)):
 if not os.path.exists('%s.mdp' % (deffnm)):
 	print("\n***** ERROR: '%s.mdp' file not found. *****" % (deffnm))
 	missing_file_error = True
-if not os.path.exists('%s.ndx' % (deffnm)):
+if not os.path.exists('%s.ndx' % (deffnm)) and take_ndx == True:
 	print("\n***** ERROR: '%s.ndx' file not found. *****" % (deffnm))
 if missing_file_error:
 	sys.exit()
@@ -163,26 +167,45 @@ while num_folder <= num_sims:
 	run("cp %s.top %s" % (deffnm, folder))
 	run("cp %s.gro %s" % (deffnm, folder))
 	run("cp %s.mdp %s" % (deffnm, folder))
-	run("cp %s.ndx %s" % (deffnm, folder))	
+	if take_ndx == True:
+		run("cp %s.ndx %s" % (deffnm, folder))	
 	job_folders.append(folder)
 	num_folder += 1
 
-# create and run a job script in each of the folders
-script = """#!/bin/bash
+# create and run a job script in each of the folders based on ndx
+script = ''
+if take_ndx == True:	
+	script = """#!/bin/bash
 
-### Specify the name of the job to run (the line below is not a comment even though it looks like one)
-#MSUB -N %s -l walltime=99:00:00:00
+	### Specify the name of the job to run (the line below is not a comment even though it looks like one)
+	#MSUB -N %s -l walltime=99:00:00:00
 
-### Use the current folder as the working directory
-PBS_PWD="`pwd`";
-cd "${PBS_O_WORKDIR}";
+	### Use the current folder as the working directory
+	PBS_PWD="`pwd`";
+	cd "${PBS_O_WORKDIR}";
 
-### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
-source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
+	### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
+	source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
-grompp_mpi -f %s.mdp -c %s -p %s -o %s-run;
-mdrun_mpi -deffnm %s-run;
-""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm)
+	grompp_mpi -f %s -c %s -p %s -o %s-run -n %s;
+	mdrun_mpi -deffnm %s-run;
+	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm, deffnm)
+else:
+	script = """#!/bin/bash
+
+	### Specify the name of the job to run (the line below is not a comment even though it looks like one)
+	#MSUB -N %s -l walltime=99:00:00:00
+
+	### Use the current folder as the working directory
+	PBS_PWD="`pwd`";
+	cd "${PBS_O_WORKDIR}";
+
+	### Sourcing GROMACS 5.0.4 so grompp & mdrun could be used
+	source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
+
+	grompp_mpi -f %s.mdp -c %s -p %s -o %s-run;
+	mdrun_mpi -deffnm %s-run;
+	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm)
 
 current_folder = os.getcwd()
 
