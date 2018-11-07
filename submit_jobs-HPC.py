@@ -82,7 +82,6 @@ take_ndx = True
 options = sys.argv
 for i in range(len(options)):
 	flag = options[i].lower()
-	print(flag)
 	if flag == "-deffnm" or flag == "-d":
 		deffnm = options[i+1]
 	if flag == "-name" or flag == "-n":
