@@ -97,7 +97,7 @@ for i in range(len(options)):
         sys.exit()
 
 # Check for valid input
-if  deffnm == "" or num_cores > 48 or job_name == "" or num_sims > 99:
+if  deffnm == "" or num_cores > maximumCore or job_name == "" or num_sims > 99:
 	print("\n***** ERROR.  INVALID PARAMETERS. *****")
 	if deffnm == "":
 		print("\nName of mdp, gro, top, and ndx is missing!!")
