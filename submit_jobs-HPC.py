@@ -6,6 +6,7 @@
 import os
 import sys
 import commands
+import re
 
 # Function to run a linux command
 def run(command, display_output=False):
@@ -22,16 +23,16 @@ def getProcessor():
     return output
 
 # Grabbing Available Cores Information and Setting Constraint on Cores Usage Section
-listArray = getProcessor()
-listArray.replace("+","\n")
+#listArray = getProcessor()
+listArray = "exec_host = n001.cluster.com/0\nexec_host = n015.cluster.com/9\nexec_host = n015.cluster.com/7\nexec_host = n018.cluster.com/0-47+n017.cluster.com/0-47"
+listArray = listArray.replace("+","\n")
 listArray = listArray.split("\n")
 print(listArray)
 # Declare to cores available for all Sorinlab Nodes
 coresAvailable = {
-	"node17":48,
-	"node18":48
+	"n017":48,
+	"n018":48
 }
-
 for i in listArray:
 	# Add more "if" statements if we get a new node 
 	if "n017" in i:
@@ -39,17 +40,17 @@ for i in listArray:
 		if "-" in tempSplit[1]:
 			tempSplit = tempSplit[1].split("-")
 			tempSplit = [int(j) for j in tempSplit]
-			coresAvailable["node17"] = coresAvailable["node17"] - (tempSplit[1] - tempSplit[0] + 1)
+			coresAvailable["n017"] = coresAvailable["n017"] - (tempSplit[1] - tempSplit[0] + 1)
 		else:
-			coresAvailable["node17"] = coresAvailable["node17"] - 1
+			coresAvailable["n017"] = coresAvailable["n017"] - 1
 	if "n018" in i:
 		tempSplit = i.split("/")
 		if "-" in tempSplit[1]:
 			tempSplit = tempSplit[1].split("-")
 			tempSplit = [int(j) for j in tempSplit]
-			coresAvailable["node18"] = coresAvailable["node18"] - (tempSplit[1] - tempSplit[0] + 1)
+			coresAvailable["n018"] = coresAvailable["n018"] - (tempSplit[1] - tempSplit[0] + 1)
 		else:
-			coresAvailable["node18"] = coresAvailable["node18"] - 1
+			coresAvailable["n018"] = coresAvailable["n018"] - 1
 maximumCore = 0
 for key in coresAvailable:
 	maximumCore = maximumCore + coresAvailable[key] 
@@ -58,16 +59,17 @@ Usage:  submit_jobs-HPC.py  [options]
 
     -deffnm     or -d  name used for mdp, gro, top, and ndx (required)
     -name       or -n  name of the job used by the PBS queue system (required)
-    -sims       or -s  number of simulations to perform (default: 1, maximum: *must not exceed cores)
+    -sim        or -s  number of simulations to perform (default: 1, maximum: *must not exceed cores)
 			* IE: 2 simulations with 5 cores means 2 simulations with 5 cores each, totaling 10 cores
-    -cores      or -c  number of cores used for each simulation (default: 1, maximum: %s)
+    -core       or -c  number of cores used for each simulation (default: 1, maximum: %s)
 			* Maximum core(s) to 1 simulation
     -help       or -h  show this help message and exit
 	
 Current Cores Usage:
 	Node 17: %s core(s) available
 	Node 18: %s core(s) available
-""" % (maximumCore,coresAvailable["node17"],coresAvailable["node18"])
+""" % (maximumCore,coresAvailable["n017"],coresAvailable["n018"])
+# End of Constraint Section
 
 # default parameters
 deffnm = ""
@@ -84,12 +86,12 @@ for i in range(len(options)):
         deffnm = options[i+1]
     if flag == "-name" or flag == "-n":
         job_name = options[i+1]
-    if flag == "-sims" or flag == "-s":
+    if flag == "-sim" or flag == "-s":
         if options[i+1].isdigit() == False:
             print("Invalid simulations number!!! ", options[i+1] ," is not a NUMBER!!")
             sys.exit()
         num_sims = int(options[i+1])
-    if flag == "-cores" or flag == "-c":
+    if flag == "-core" or flag == "-c":
         if options[i+1].isdigit() == False:
             print("Invalid cores number!!! ", options[i+1] ," is not a NUMBER!!!")
             sys.exit()
@@ -103,8 +105,11 @@ if  deffnm == "" or num_cores > maximumCore or job_name == "" or num_sims > 99:
 	print("\n***** ERROR.  INVALID PARAMETERS. *****")
 	if deffnm == "":
 		print("\nName of mdp, gro, top, and ndx is missing!!")
-	if num_cores > 48:
-		print("\nNumber of cores exceed 48!!")
+	if num_cores > maximumCore:
+		if maximumCore == 0:
+			print("\nNo more cores available!!!")
+		else:
+			print("\nNumber of cores exceed maximum cores!!")
 	if job_name == "":
 		print("\nPBS queue name is missing!!")
 	if num_sims > 99:
