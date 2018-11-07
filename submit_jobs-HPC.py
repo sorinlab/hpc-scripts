@@ -39,7 +39,7 @@ for i in listArray:
 			coresAvailable["node17"] = coresAvailable["node17"] - (tempSplit[1] - tempSplit[0] + 1)
 		else:
 			coresAvailable["node17"] = coresAvailable["node17"] - 1
-	if "n18" in i:
+	if "n018" in i:
 		tempSplit = i.split("/")
 		if "-" in tempSplit[1]:
 			tempSplit = tempSplit[1].split("-")
