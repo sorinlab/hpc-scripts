@@ -59,7 +59,7 @@ Usage:  submit_jobs-HPC.py  [options]
     -name       or -n  name of the job used by the PBS queue system (required)
     -sim        or -s  number of simulations to perform (default: 1, maximum: *must not exceed cores)
 			* IE: 2 simulations with 5 cores means 2 simulations with 5 cores each, totaling 10 cores
-    -core       or -c  number of cores used for each simulation (default: 1, maximum: %s)
+	-core       or -c  number of cores used for each simulation (default: 1, maximum: %s)
 			* Maximum core(s) calculated to 1 simulation
 	-nondx		or -x  exclude ndx file
     -help       or -h  show this help message and exit
