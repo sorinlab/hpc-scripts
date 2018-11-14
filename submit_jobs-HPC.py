@@ -207,7 +207,7 @@ else:
 
 	grompp_mpi -f %s.mdp -c %s -p %s -o %s-run;
 	mdrun_mpi -nt %s -deffnm %s-run;
-	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
+	""" % (job_name, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
 
 current_folder = os.getcwd()
 
