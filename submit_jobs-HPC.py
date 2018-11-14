@@ -190,8 +190,8 @@ if take_ndx == True:
 	source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
 	grompp_mpi -f %s -c %s -p %s -o %s-run -n %s;
-	mdrun_mpi -deffnm %s-run;
-	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm, deffnm)
+	mdrun_mpi -deffnm %s-run -nt %s;
+	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm, deffnm, num_cores)
 else:
 	script = """#!/bin/bash
 
