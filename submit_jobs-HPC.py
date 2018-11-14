@@ -26,6 +26,7 @@ def getProcessor():
 listArray = getProcessor()
 listArray = listArray.replace("+","\n")
 listArray = listArray.split("\n")
+
 # Declare to cores available for all Sorinlab Nodes
 coresAvailable = {
 	"n017":48,
@@ -184,5 +185,5 @@ for folder in job_folders:
 	file_name.write(script)
 	file_name.close()
 	os.chdir(current_folder + "/" + folder)
-	run("msub -j oe -l procs=%s run_sim.sh" % (num_cores),True)
+	run("msub -l procs=%s run_sim.sh" % (num_cores),True)
 	
