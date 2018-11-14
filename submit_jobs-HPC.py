@@ -190,8 +190,8 @@ if take_ndx == True:
 	source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
 	grompp_mpi -f %s -c %s -p %s -o %s-run -n %s;
-	mdrun_mpi -nt %s -deffnm %s-run;
-	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
+	mdrun_mpi -deffnm %s-run;
+	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm, deffnm)
 else:
 	script = """#!/bin/bash
 
@@ -206,8 +206,8 @@ else:
 	source /research/CNSM-SorinLab/Admin/GRO/gromacs-5.0.4/bin/GMXRC;
 
 	grompp_mpi -f %s.mdp -c %s -p %s -o %s-run;
-	mdrun_mpi -nt %s -deffnm %s-run;
-	""" % (job_name, deffnm, deffnm, deffnm, deffnm, num_cores, deffnm)
+	mdrun_mpi -deffnm %s-run;
+	""" % (job_name, deffnm, deffnm, deffnm, deffnm, deffnm)
 
 current_folder = os.getcwd()
 
