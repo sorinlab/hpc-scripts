@@ -8,6 +8,8 @@ import sys
 import commands
 import re
 
+# THIS IS FOR TESTING ONLY
+
 # Function to run a linux command
 def run(command, display_output=False):
     status, output = commands.getstatusoutput(command)
